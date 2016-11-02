@@ -3,22 +3,33 @@
 
 #include <string>
 #include "stack.h"
+#include<iostream>
 
 using namespace std;
 
+struct priority
+{
+	int pr;
+	char name;
+};
+
 class TPostfix
 {
-  string infix;
-  string postfix;
+	string infix;
+	string postfix;
 public:
-  TPostfix()
-  {
-    infix = "a + b";
-  }
-  string GetInfix() { return infix; }
-  string GetPostfix() { return postfix; }
-  string ToPostfix();
-  double Calculate(); // ¬вод переменных, вычисление по постфиксной форме
+	TPostfix(string s)
+	{
+		infix = s;
+		postfix = s;//инициализируем постфикс
+	}
+	string GetInfix() { return infix; }
+	string GetPostfix() { return postfix; }
+	int GetSizeInfix() { return infix.length(); }
+	int GetSizePostfix(){ return postfix.length(); }
+	string ToPostfix();
+	double Calculate(); // ¬вод переменных, вычисление по постфиксной форме
+	int Priort(char c); // вместо таблицы функци€ дл€ вычислени€ приоритетов 
 };
 
 #endif
