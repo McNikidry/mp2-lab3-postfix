@@ -50,8 +50,8 @@ double TPostfix::Calculate()
 {
 	int len = GetSizePostfix();
 
-	TStack<int> stack(len);
-
+	TStack<double> stack(len);
+	double c, c1;
 	double k;
 	for (int i = 0; i < len; i++)
 	{
@@ -61,10 +61,30 @@ double TPostfix::Calculate()
 			cin >> k;
 			stack.Push(k);
 		}
-		if (postfix[i] == '+') stack.Push(stack.Pop() + stack.Pop());
-		if (postfix[i] == '-') stack.Push(stack.Pop() - stack.Pop());
-		if (postfix[i] == '/') stack.Push(stack.Pop() / stack.Pop());
-		if (postfix[i] == '*') stack.Push(stack.Pop() * stack.Pop());
+		if (postfix[i] == '+')
+		{
+			c = stack.Pop();
+			c1 = stack.Pop();
+			stack.Push(c1+c);
+		}
+		if (postfix[i] == '-')
+		{
+			c = stack.Pop();
+			c1 = stack.Pop();
+			stack.Push(c1 - c);
+		}
+		if (postfix[i] == '/')
+		{
+			c = stack.Pop();
+			c1 = stack.Pop();
+			stack.Push(c1 / c);
+		}
+		if (postfix[i] == '*')
+		{
+			c = stack.Pop();
+			c1 = stack.Pop();
+			stack.Push(c1*c);
+		}
 
 	}
 	return stack.Pop();
