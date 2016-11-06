@@ -51,39 +51,62 @@ double TPostfix::Calculate()
 	int len = GetSizePostfix();
 
 	TStack<double> stack(len);
+
 	double c, c1;
 	double k;
+
+	double tmp[max_size];
+	char tmp1[max_size];
+	int flag;
+
 	for (int i = 0; i < len; i++)
 	{
 		if (postfix[i] != '+' && postfix[i] != '-' && postfix[i] != '*' && postfix[i] != '/')
 		{
-			cout << postfix[i] << "=" << " ";
-			cin >> k;
-			stack.Push(k);
+			flag = 0;
+			tmp1[i] = postfix[i];
+			for (int j = 0; j < i; j++)
+				if (postfix[i] == tmp1[j])
+				{
+					flag = 1;
+					stack.Push(tmp[j]);
+					break;
+				}
+
+			if (flag == 0)
+			{
+				cout << postfix[i] << "=" << " ";
+				cin >> k;
+				tmp[i] = k;
+				stack.Push(k);
+			}
 		}
-		if (postfix[i] == '+')
+		else
 		{
-			c = stack.Pop();
-			c1 = stack.Pop();
-			stack.Push(c1+c);
-		}
-		if (postfix[i] == '-')
-		{
-			c = stack.Pop();
-			c1 = stack.Pop();
-			stack.Push(c1 - c);
-		}
-		if (postfix[i] == '/')
-		{
-			c = stack.Pop();
-			c1 = stack.Pop();
-			stack.Push(c1 / c);
-		}
-		if (postfix[i] == '*')
-		{
-			c = stack.Pop();
-			c1 = stack.Pop();
-			stack.Push(c1*c);
+			if (postfix[i] == '+')
+			{
+				c = stack.Pop();
+				c1 = stack.Pop();
+				stack.Push(c1 + c);
+			}
+			if (postfix[i] == '-')
+			{
+				c = stack.Pop();
+				c1 = stack.Pop();
+				stack.Push(c1 - c);
+			}
+			if (postfix[i] == '/')
+			{
+				c = stack.Pop();
+				c1 = stack.Pop();
+				stack.Push(c1 / c);
+			}
+			if (postfix[i] == '*')
+			{
+				c = stack.Pop();
+				c1 = stack.Pop();
+				stack.Push(c1*c);
+			}
 		}
 
 	}

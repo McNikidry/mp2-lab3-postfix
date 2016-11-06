@@ -7,11 +7,6 @@
 
 using namespace std;
 
-struct priority
-{
-	int pr;
-	char name;
-};
 
 class TPostfix
 {
