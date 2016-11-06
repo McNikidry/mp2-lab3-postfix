@@ -1,24 +1,30 @@
-п»ї#ifndef __POSTFIX_H__
+#ifndef __POSTFIX_H__
 #define __POSTFIX_H__
 
 #include <string>
 #include "stack.h"
+#include<iostream>
 
 using namespace std;
 
+
 class TPostfix
 {
-  string infix;
-  string postfix;
+	string infix;
+	string postfix;
 public:
-  TPostfix()
-  {
-    infix = "a + b";
-  }
-  string GetInfix() { return infix; }
-  string GetPostfix() { return postfix; }
-  string ToPostfix();
-  double Calculate(); // Р’РІРѕРґ РїРµСЂРµРјРµРЅРЅС‹С…, РІС‹С‡РёСЃР»РµРЅРёРµ РїРѕ РїРѕСЃС‚С„РёРєСЃРЅРѕР№ С„РѕСЂРјРµ
+	TPostfix(string s)
+	{
+		infix = s;
+		postfix = s;//инициализируем постфикс
+	}
+	string GetInfix() { return infix; }
+	string GetPostfix() { return postfix; }
+	int GetSizeInfix() { return infix.length(); }
+	int GetSizePostfix(){ return postfix.length(); }
+	string ToPostfix();
+	double Calculate(); // Ввод переменных, вычисление по постфиксной форме
+	int Priort(char c); // вместо таблицы функция для вычисления приоритетов 
 };
 
 #endif
