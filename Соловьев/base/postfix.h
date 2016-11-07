@@ -7,24 +7,25 @@
 
 using namespace std;
 
-
 class TPostfix
 {
 	string infix;
 	string postfix;
-public:
+	public:
 	TPostfix(string s)
 	{
 		infix = s;
-		postfix = s;//инициализируем постфикс
+		postfix = s;
 	}
 	string GetInfix() { return infix; }
-	string GetPostfix() { return postfix; }
+	string GetPostfix() 
+	{
+		return postfix; 
+	}
 	int GetSizeInfix() { return infix.length(); }
-	int GetSizePostfix(){ return postfix.length(); }
 	string ToPostfix();
 	double Calculate(); // Ввод переменных, вычисление по постфиксной форме
-	int Priort(char c); // вместо таблицы функция для вычисления приоритетов 
+	int Priort(char c); // вместо таблицы, функция для вычисления приоритетов 
 };
 
 #endif

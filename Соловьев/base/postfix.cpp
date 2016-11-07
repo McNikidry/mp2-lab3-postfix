@@ -4,19 +4,27 @@
 
 string TPostfix::ToPostfix()
 {
-	int i;//счетчик
 
 	int  len = GetSizeInfix(); // вычисляем размер длины строки
-
 	char result[max_size];
-
 	TStack<char> stack(len); //стек для хранения операция
 	int count = 0;//счетчик для postfix
-
-	for (i = 0; i < len; i++)
+	int i = 0;
+	int flag = 0;
+	while (i < len)
 	{
 		if (infix[i] != '+' && infix[i] != '-' && infix[i] != '*' && infix[i] != '/' && infix[i] != '(' && infix[i] != ')')
-			result[count++] = infix[i];
+		{
+			flag = 0;
+			while ((infix[i] != '+' && infix[i] != '-' && infix[i] != '*' && infix[i] != '/' && infix[i] != '(' && infix[i] != ')') && i<len)
+			{
+				if ((infix[i] >= 'a' && infix[i] <= 'z') || (infix[i] >= 'A' && infix[i] <= 'Z')) flag = 0;
+				else flag = 1;
+				result[count++] = infix[i++];
+			}
+			if( flag==1) result[count++] = ' ';
+		}
+			
 		if (infix[i] == '(') stack.Push(infix[i]);
 		if (infix[i] == ')')
 		{
@@ -35,20 +43,18 @@ string TPostfix::ToPostfix()
 				stack.Push(infix[i]);
 			}
 		}
+		i++;
 	}
 	while (stack.IsEmpty() != true)
 		result[count++] = stack.Pop();
-
 	result[count] = '\0';
-
 	postfix = result;
-
 	return postfix;
 }
 
 double TPostfix::Calculate()
 {
-	int len = GetSizePostfix();
+	int len =postfix.length();
 
 	TStack<double> stack(len);
 
@@ -59,26 +65,47 @@ double TPostfix::Calculate()
 	char tmp1[max_size];
 	int flag;
 
-	for (int i = 0; i < len; i++)
+	int i = 0;
+
+	while(i<len)
 	{
 		if (postfix[i] != '+' && postfix[i] != '-' && postfix[i] != '*' && postfix[i] != '/')
 		{
-			flag = 0;
-			tmp1[i] = postfix[i];
-			for (int j = 0; j < i; j++)
-				if (postfix[i] == tmp1[j])
-				{
-					flag = 1;
-					stack.Push(tmp[j]);
-					break;
-				}
-
-			if (flag == 0)
+			if ((postfix[i] >= 'a' && postfix[i] <= 'z') || (postfix[i] >= 'A' && postfix[i] <= 'Z'))
 			{
-				cout << postfix[i] << "=" << " ";
-				cin >> k;
-				tmp[i] = k;
-				stack.Push(k);
+				flag = 0;
+				tmp1[i] = postfix[i];
+				for (int j = 0; j < i; j++)
+					if (postfix[i] == tmp1[j])
+					{
+						flag = 1;
+						stack.Push(tmp[j]);
+						break;
+					}
+
+				if (flag == 0)
+				{
+					cout << postfix[i] << "=" << " ";
+					cin >> k;
+					tmp[i] = k;
+					stack.Push(k);
+				}
+			}
+			else
+			{
+				int tmp = 0;
+				while (postfix[i] != ' ')
+				{
+					while (postfix[i] >= 0x30 && postfix[i] <= 0x39)
+					{
+						tmp = tmp + (postfix[i] & 0x0F);
+						tmp = tmp * 10;
+						i++;
+					}
+				}
+				tmp = tmp / 10;
+				
+				stack.Push(tmp);
 			}
 		}
 		else
@@ -108,7 +135,7 @@ double TPostfix::Calculate()
 				stack.Push(c1*c);
 			}
 		}
-
+			i++;
 	}
 	return stack.Pop();
 }
