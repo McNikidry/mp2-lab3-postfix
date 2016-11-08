@@ -6,7 +6,7 @@ TEST(TPostfix, can_create_postfix)
 	ASSERT_NO_THROW(TPostfix("a+b"));
 }
 TEST(TPostfix, allegiance_test_one)
-{ 
+{
 	string tmp;
 	tmp = "a+b";
 
@@ -64,4 +64,59 @@ TEST(TPostfix, allegiance_test_five)
 	res = "ab+ck*-dze*p--/";
 
 	EXPECT_EQ(res, k.ToPostfix());
+}
+TEST(TPostfix, test_on_calculate_one)
+{
+	string a;
+	a="20+3";
+
+	TPostfix k(a);
+	k.ToPostfix();
+
+	double tmp=k.Calculate();
+	double res = 23;
+
+	EXPECT_EQ(res, tmp);
+
+}
+TEST(TPostfix, test_on_calculate_two)
+{
+string a;
+a = "20*3-100/10";
+
+TPostfix k(a);
+k.ToPostfix();
+
+double tmp = k.Calculate();
+double res = 50;
+
+EXPECT_EQ(res, tmp);
+}
+
+TEST(TPostfix, test_on_calculate_three)
+{
+	string a;
+	a = "(100-50)/2-(10*2)";
+
+	TPostfix k(a);
+	k.ToPostfix();
+
+	double tmp = k.Calculate();
+	double res = 5;
+
+	EXPECT_EQ(res, tmp);
+}
+
+TEST(TPostfix, test_on_calculate_four)
+{
+	string a;
+	a = "1024/2-(2048/2-100*3+2)*2+(8192/2)";
+
+	TPostfix k(a);
+	k.ToPostfix();
+
+	double tmp = k.Calculate();
+	double res = 3156;
+
+	EXPECT_EQ(res, tmp);
 }
